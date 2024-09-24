@@ -3,9 +3,9 @@
 document.addEventListener('DOMContentLoaded', async function() {
   var calendarEl = document.getElementById('calendar');
   const slugParam = getUrlParameter('slug');
+  const backButton = document.getElementById('back-link');
 
   const activities = await getActivities(slugParam);
-  console.log(activities)
   const eventSchedules = getSchedule(activities);
   const filteredEvent = filterInvalidEvent(eventSchedules);
   
@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', async function() {
               )} -  ${moment(i.end).format("h:mm a")}</span>`
   }));
 
+  backButton.addEventListener("click", function() {
+    window.open(`https://gotruckster.com/food-truck/${slugParam}`, '_blank').focus();
+  })
+  
   // Initialize FullCalendar
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
@@ -33,7 +37,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     eventDidMount: function(info) {
       // Set up hover event for the custom tooltip
       info.el.addEventListener('mouseenter', function() {
-        console.log(info)
           tooltip.style.display = 'block';
           tooltip.innerHTML = `
               <strong>${info.event.title}</strong><br>
