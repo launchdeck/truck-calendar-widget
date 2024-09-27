@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', async function() {
   const filteredEvent = filterInvalidEvent(eventSchedules);
   
   const listEvent = filteredEvent.map(i => ({
-    title: i.location_name,
     start: moment(i.start).format('YYYY-MM-DDTHH:mm:ss'),
     end: moment(i.end).format('YYYY-MM-DDTHH:mm:ss'),
     description: i.location_description || "",
+    locationName: i.location_name,
     location: i.address,
     displayTime: `${moment(i.start).format("ddd, MMM DD")}
               <span>${moment(i.start).format(
@@ -35,24 +35,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         right: 'dayGridMonth,dayGridWeek,dayGridDay'
     },
     eventDidMount: function(info) {
-      // Set up hover event for the custom tooltip
-      info.el.addEventListener('mouseenter', function() {
-          tooltip.style.display = 'block';
-          tooltip.innerHTML = `
-              <strong>${info.event.title}</strong><br>
+      // Initialize tooltip for each event
+      tippy(info.el, {
+        content: `
+              <strong>${info.event.extendedProps.locationName}</strong><br>
               <p>${info.event.extendedProps.location}</p>
               ${info.event.extendedProps.displayTime}
-          `;
-      });
-
-      info.el.addEventListener('mousemove', function(event) {
-          // Position the tooltip based on mouse movement
-          tooltip.style.left = event.pageX + 10 + 'px';
-          tooltip.style.top = event.pageY + 10 + 'px';
-      });
-
-      info.el.addEventListener('mouseleave', function() {
-          tooltip.style.display = 'none';
+          `,
+        allowHTML: true,
+        placement: 'top',
+        arrow: true,
+        theme: 'light',
       });
     }
   });

@@ -14,16 +14,21 @@
 
     <!-- Include Moment Timezone -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
-
+    
+    <!-- Include Tippy.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.7/dist/tippy.css">
+        
 </head>
 <body>
     <div id="calendar"></div>
     <div class="footer-btn">
         <button id="back-link">View Truck Details</button>
     </div>
-    <!-- Tooltip for calendar events -->
-    <div id="tooltip" class="tooltip"></div>
     
+    <!-- Include Tippy.js JS -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+
     <script src="timezones.js"></script>
     <script src="script.js"></script>
 </body>
